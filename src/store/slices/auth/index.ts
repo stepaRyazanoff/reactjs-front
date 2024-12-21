@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IAuthState, IPublicUser} from '../../../common/types';
+import {IAuthState, IAuthUserData, IPublicUser} from '../../../common/types';
 
 const initialState: IAuthState = {
     user: null,
@@ -10,8 +10,8 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state: IAuthState, action: PayloadAction<IPublicUser>) => {
-            state.user = action.payload;
+        login: (state: IAuthState, action: PayloadAction<IAuthUserData>) => {
+            state.user = action.payload.user;
             state.isLogged = true;
         }
     }

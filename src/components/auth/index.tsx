@@ -44,13 +44,14 @@ export const AuthRootComponent: React.FC = (): React.ReactElement => {
         try {
             switch (location.pathname) {
                 case '/login': {
+
                     for (const key in loginUserData) {
                         if (!loginUserData[key as keyof ILoginUserData].trim()) {
                             throw new Error(AppErrors.FILL_IN_ALL_FIELDERS_OF_LOGIN);
                         }
                     }
-                    const user = await axiosInstance.post('auth/login', loginUserData);
-                    await dispatch(login(user.data));
+                    const userData = await axiosInstance.post('auth/login', loginUserData);
+                    await dispatch(login(userData.data));
                     navigate('/');
                     break;
                 }
@@ -64,19 +65,19 @@ export const AuthRootComponent: React.FC = (): React.ReactElement => {
                         throw new Error(AppErrors.PASSWORDS_DO_NOT_MATCH);
                     }
 
-                    const userData = {
+                    const newUser = {
                         firstName: registerUserData.firstName,
                         userName: registerUserData.userName,
                         email: registerUserData.email,
                         password: registerUserData.password
                     };
-                    const newUser = await axiosInstance.post('auth/register', userData);
+                    const userData = await axiosInstance.post('auth/register', newUser);
                     const loginData = {
-                        email: newUser.data.email,
+                        email: userData.data.email,
                         password: registerUserData.password
                     };
-                    const registeredUser = await axiosInstance.post('auth/login', loginData);
-                    await dispatch(login(registeredUser.data));
+                    const registeredUserData = await axiosInstance.post('auth/login', loginData);
+                    await dispatch(login(registeredUserData.data));
                     navigate('/');
                     break;
                 }
