@@ -2,9 +2,9 @@ import React from 'react';
 import {ILayout} from '../../common/types/layout';
 import {TopBar} from '../top-bar';
 import {useLocation} from 'react-router-dom';
-import {Box, useMediaQuery} from '@mui/material';
+import {useMediaQuery} from '@mui/material';
 import {Sidebar} from '../sidebar';
-import {StyledBox} from './styles';
+import {StyledBox, StyledMainBox} from './styles';
 
 export const LayoutComponent: React.FC<ILayout> = ({children}) => {
     const [isOpen, setIsOpen] = React.useState<boolean>(true);
@@ -18,14 +18,10 @@ export const LayoutComponent: React.FC<ILayout> = ({children}) => {
                                 {children}
                             </>
                     ) : (
-                            <Box
-                                    display={isNonMobile ? 'flex' : 'block'}
-                                    width='100%'
-                                    height='100%'
-                            >
+                            <StyledMainBox isNonMobile={isNonMobile}>
                                 <Sidebar
                                         isNonMobile={isNonMobile}
-                                        drawerWidth='250'
+                                        drawerWidth='250px'
                                         isOpen={isOpen}
                                         setIsOpen={setIsOpen}
                                 />
@@ -33,7 +29,7 @@ export const LayoutComponent: React.FC<ILayout> = ({children}) => {
                                     <TopBar/>
                                     {children}
                                 </StyledBox>
-                            </Box>
+                            </StyledMainBox>
                     )
     );
 };

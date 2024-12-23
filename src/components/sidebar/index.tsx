@@ -5,22 +5,26 @@ import {
     IconButton,
     List,
     ListItem,
-    ListItemButton,
     Typography,
-    Drawer,
     ListItemIcon,
     ListItemText,
-    useTheme
 } from '@mui/material';
-import {FlexBetween} from '../flex-between';
 import {
     ArrowForwardIosOutlined,
     ArrowBackIosNewOutlined,
     LogoutOutlined
 } from '@mui/icons-material';
+import {
+    StyledSidebarHeaderBox,
+    StyledDrawer,
+    StyledListItemButton,
+    StyledNavBox,
+    StyledNavList,
+    StyledHeaderTypography
+} from './styles';
+import {FlexBetween} from '../flex-between';
 import {navMenu} from '../../common/mock/navigate';
-import {tokens} from '../../theme';
-import {StyledBox, StyledListItemButton} from './styles';
+
 
 interface IProps {
     isNonMobile: boolean;
@@ -33,8 +37,6 @@ export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, set
     const [active, setActive] = React.useState<string>('');
     const {pathname} = useLocation();
     const navigate = useNavigate();
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
 
     React.useEffect(() => {
         setActive(pathname.substring(1));
@@ -43,47 +45,30 @@ export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, set
     return (
             <Box component='nav'>
                 {isOpen && (
-                        <Drawer
+                        <StyledDrawer
                                 open={isOpen}
                                 onClose={() => setIsOpen(false)}
                                 variant='persistent'
                                 anchor='left'
-                                sx={{
-                                    width: drawerWidth,
-                                    '& .MuiDrawer-paper': {
-                                        color: theme.palette.secondary.main,
-                                        backgroundColor: theme.palette.primary.main,
-                                        boxSizing: 'border-box',
-                                        width: drawerWidth,
-                                    }
-                                }}
+                                drawerWidth={drawerWidth}
                         >
-                            <Box width='100%'
-                                 sx={{borderBottom: `1px solid ${colors.borderColor}`}}
-                            >
+                            <StyledNavBox>
                                 <Box>
                                     <FlexBetween>
-                                        <StyledBox>
-                                            <Typography
-                                                    variant='h1'
-                                                    color={
-                                                        theme.palette.mode === 'dark'
-                                                                ? colors.white.DEFAULT
-                                                                : colors.black.DEFAULT
-                                                    }
-                                            >
+                                        <StyledSidebarHeaderBox>
+                                            <StyledHeaderTypography variant='h1'>
                                                 Demo
-                                            </Typography>
+                                            </StyledHeaderTypography>
 
                                             {!isNonMobile && (
                                                     <IconButton onClick={() => setIsOpen(!isOpen)}>
                                                         <ArrowBackIosNewOutlined/>
                                                     </IconButton>
                                             )}
-                                        </StyledBox>
+                                        </StyledSidebarHeaderBox>
                                     </FlexBetween>
                                 </Box>
-                                <List sx={{marginBottom: '55px'}}>
+                                <StyledNavList>
                                     {navMenu.map((el) => (
                                             <ListItem key={el.id}>
                                                 <StyledListItemButton onClick={() => navigate(`${el.path}`)}>
@@ -98,9 +83,9 @@ export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, set
                                                 </StyledListItemButton>
                                             </ListItem>
                                     ))}
-                                </List>
-                            </Box>
-                            <Box width='100%'>
+                                </StyledNavList>
+                            </StyledNavBox>
+                            <Box sx={{width: '100%'}}>
                                 <List>
                                     <ListItem>
                                         <StyledListItemButton>
@@ -114,7 +99,7 @@ export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, set
                                     </ListItem>
                                 </List>
                             </Box>
-                        </Drawer>
+                        </StyledDrawer>
                 )}
             </Box>
     );
