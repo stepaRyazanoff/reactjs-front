@@ -1,8 +1,26 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {Box, Drawer, IconButton, Typography, useTheme} from '@mui/material';
+import {
+    Box,
+    IconButton,
+    List,
+    ListItem,
+    ListItemButton,
+    Typography,
+    Drawer,
+    ListItemIcon,
+    ListItemText,
+    useTheme
+} from '@mui/material';
 import {FlexBetween} from '../flex-between';
-import {ArrowForwardIosOutlined, ArrowBackIosNewOutlined} from '@mui/icons-material';
+import {
+    ArrowForwardIosOutlined,
+    ArrowBackIosNewOutlined,
+    LogoutOutlined
+} from '@mui/icons-material';
+import {navMenu} from '../../common/mock/navigate';
+import {tokens} from '../../theme';
+import {StyledBox, StyledListItemButton} from './styles';
 
 interface IProps {
     isNonMobile: boolean;
@@ -16,6 +34,7 @@ export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, set
     const {pathname} = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
     React.useEffect(() => {
         setActive(pathname.substring(1));
@@ -39,25 +58,61 @@ export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, set
                                     }
                                 }}
                         >
-                            <Box width='100%'>
+                            <Box width='100%'
+                                 sx={{borderBottom: `1px solid ${colors.borderColor}`}}
+                            >
                                 <Box>
                                     <FlexBetween>
-                                        <Box
-                                                display='flex'
-                                                alignItems='center'
-                                                gap='10px'
-                                        >
-                                            <Typography>
+                                        <StyledBox>
+                                            <Typography
+                                                    variant='h1'
+                                                    color={
+                                                        theme.palette.mode === 'dark'
+                                                                ? colors.white.DEFAULT
+                                                                : colors.black.DEFAULT
+                                                    }
+                                            >
                                                 Demo
                                             </Typography>
+
                                             {!isNonMobile && (
                                                     <IconButton onClick={() => setIsOpen(!isOpen)}>
                                                         <ArrowBackIosNewOutlined/>
                                                     </IconButton>
                                             )}
-                                        </Box>
+                                        </StyledBox>
                                     </FlexBetween>
                                 </Box>
+                                <List sx={{marginBottom: '55px'}}>
+                                    {navMenu.map((el) => (
+                                            <ListItem key={el.id}>
+                                                <StyledListItemButton onClick={() => navigate(`${el.path}`)}>
+                                                    <ListItemIcon>
+                                                        {el.icon}
+                                                    </ListItemIcon>
+                                                    <ListItemText>
+                                                        <Typography variant='body1'>
+                                                            {el.name}
+                                                        </Typography>
+                                                    </ListItemText>
+                                                </StyledListItemButton>
+                                            </ListItem>
+                                    ))}
+                                </List>
+                            </Box>
+                            <Box width='100%'>
+                                <List>
+                                    <ListItem>
+                                        <StyledListItemButton>
+                                            <ListItemIcon>
+                                                <LogoutOutlined/>
+                                            </ListItemIcon>
+                                            <ListItemText>
+                                                <Typography> Logout </Typography>
+                                            </ListItemText>
+                                        </StyledListItemButton>
+                                    </ListItem>
+                                </List>
                             </Box>
                         </Drawer>
                 )}
