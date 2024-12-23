@@ -4,6 +4,7 @@ import {TopBar} from '../top-bar';
 import {useLocation} from 'react-router-dom';
 import {Box, useMediaQuery} from '@mui/material';
 import {Sidebar} from '../sidebar';
+import {StyledBox} from './styles';
 
 export const LayoutComponent: React.FC<ILayout> = ({children}) => {
     const [isOpen, setIsOpen] = React.useState<boolean>(true);
@@ -28,10 +29,10 @@ export const LayoutComponent: React.FC<ILayout> = ({children}) => {
                                         isOpen={isOpen}
                                         setIsOpen={setIsOpen}
                                 />
-                                <Box>
+                                <StyledBox>
                                     <TopBar/>
                                     {children}
-                                </Box>
+                                </StyledBox>
                             </Box>
                     )
     );
