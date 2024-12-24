@@ -1,24 +1,37 @@
-import {Box, Grid2, IconButton, InputBase, styled, Theme} from '@mui/material';
+import {
+    AppBar,
+    Box,
+    Grid2,
+    IconButton,
+    styled,
+    Toolbar,
+    InputBase,
+    Theme
+} from '@mui/material';
 import {tokens} from '../../theme';
+import {MenuOutlined} from '@mui/icons-material';
 
-export const StyledIconButton = styled(IconButton)(({theme}: { theme: Theme }) => ({
-    '&:hover': {
-        backgroundColor: 'transparent',
-    },
-}));
-
-export const StyledRootBox = styled(Box)(({theme}: { theme: Theme }) => {
+export const StyledAppBar = styled(AppBar)(({theme}: { theme: Theme }) => {
     const colors = tokens(theme.palette.mode);
     return {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '24px 32px',
-        backgroundColor: colors.primary.DEFAULT,
-        maxHeight: '95px',
-        borderBottom: `1px solid ${colors.borderColor}`
+        position: 'static',
+        background: `${colors.primary.DEFAULT}`,
+        borderBottom: `1px solid ${colors.borderColor}`,
+        boxShadow: 'none',
     };
 });
+
+export const StyledToolbar = styled(Toolbar)(() => ({
+    justifyContent: 'space-between',
+    padding: '25px 0',
+}));
+
+export const StyledMenuIcon = styled(MenuOutlined)(() => ({
+    cursor: 'pointer',
+    marginRight: '20px',
+}));
+
+export const StyledTopBarBox = styled(Box)(() => ({display: 'flex'}));
 
 export const StyledTopBarIcons = styled(Grid2)(({theme}: { theme: Theme }) => {
     const colors = tokens(theme.palette.mode);
@@ -29,6 +42,12 @@ export const StyledTopBarIcons = styled(Grid2)(({theme}: { theme: Theme }) => {
         borderRight: `1px solid ${colors.borderColor}`
     };
 });
+
+export const StyledIconButton = styled(IconButton)(() => ({
+    '&:hover': {
+        backgroundColor: 'transparent',
+    },
+}));
 
 export const StyledSearchBlock = styled(Grid2)(({theme}: { theme: Theme }) => {
     const colors = tokens(theme.palette.mode);
@@ -42,7 +61,6 @@ export const StyledSearchBlock = styled(Grid2)(({theme}: { theme: Theme }) => {
 
 export const StyledInputBase = styled(InputBase)(({theme}: { theme: Theme }) => ({
     padding: '10px 15px',
-    color: theme.palette.text.primary,
+    color: `${theme.palette.text.primary}`,
 }));
 
-export const StyledTopBarBox = styled(Box)(({theme}: { theme: Theme }) => ({display: 'flex'}));
