@@ -1,20 +1,14 @@
 import React from 'react';
 import {Button, TextField, Typography} from '@mui/material';
 import {NavigateFunction} from 'react-router-dom';
-import {IRegisterUserData} from '../index';
+import {FieldValues, UseFormRegister} from 'react-hook-form';
 
-interface IProps {
-    setUserData: React.Dispatch<React.SetStateAction<IRegisterUserData>>;
+interface IProps<TFieldValues extends FieldValues = FieldValues> {
     navigate: NavigateFunction;
+    register: UseFormRegister<TFieldValues>;
 }
 
-export const RegisterPage: React.FC<IProps> = ({setUserData, navigate}): React.ReactElement => {
-    const handleChange = (value: string, propName: string) => {
-        setUserData((prev) => ({
-            ...prev,
-            [propName]: value
-        }));
-    };
+export const RegisterPage: React.FC<IProps> = ({navigate, register}): React.ReactElement => {
     return (
             <>
                 <Typography
@@ -42,7 +36,7 @@ export const RegisterPage: React.FC<IProps> = ({setUserData, navigate}): React.R
                         placeholder='Введите ваше имя'
                         margin='normal'
                         fullWidth={true}
-                        onChange={(e) => handleChange(e.target.value, 'firstName')}
+                        {...register('firstName')}
                 />
                 <TextField
                         label='Username'
@@ -50,7 +44,7 @@ export const RegisterPage: React.FC<IProps> = ({setUserData, navigate}): React.R
                         placeholder='Введите ваш username'
                         margin='normal'
                         fullWidth={true}
-                        onChange={(e) => handleChange(e.target.value, 'userName')}
+                        {...register('userName')}
                 />
                 <TextField
                         label='Email'
@@ -58,7 +52,7 @@ export const RegisterPage: React.FC<IProps> = ({setUserData, navigate}): React.R
                         placeholder='Введите ваш email'
                         margin='normal'
                         fullWidth={true}
-                        onChange={(e) => handleChange(e.target.value, 'email')}
+                        {...register('email')}
                 />
                 <TextField
                         type='password'
@@ -67,7 +61,7 @@ export const RegisterPage: React.FC<IProps> = ({setUserData, navigate}): React.R
                         placeholder='Введите ваш пароль'
                         margin='normal'
                         fullWidth={true}
-                        onChange={(e) => handleChange(e.target.value, 'password')}
+                        {...register('password')}
                 />
                 <TextField
                         type='password'
@@ -76,7 +70,7 @@ export const RegisterPage: React.FC<IProps> = ({setUserData, navigate}): React.R
                         placeholder='Подтвердите ваш пароль'
                         margin='normal'
                         fullWidth={true}
-                        onChange={(e) => handleChange(e.target.value, 'repeatPassword')}
+                        {...register('repeatPassword')}
                 />
                 <Button
                         type='submit'

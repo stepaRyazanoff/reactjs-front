@@ -1,4 +1,4 @@
-import React, {FormEvent} from 'react';
+import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {LoginPage} from './login';
 import {RegisterPage} from './register';
@@ -9,13 +9,9 @@ import {useAppDispatch} from '../../utils/hooks';
 import {AppDispatch} from '../../store';
 import {login} from '../../store/slices/auth';
 import {AppErrors} from '../../common/errors';
+import {FieldValues, SubmitHandler, useForm} from 'react-hook-form';
 
-export interface ILoginUserData {
-    email: string;
-    password: string;
-}
-
-export interface IRegisterUserData {
+export type InputRegisterData = {
     email: string;
     firstName: string;
     userName: string;
@@ -23,62 +19,63 @@ export interface IRegisterUserData {
     repeatPassword: string;
 }
 
+export type InputLoginData = {
+    email: string;
+    password: string;
+}
+
 export const AuthRootComponent: React.FC = (): React.ReactElement => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch<AppDispatch>();
     const location = useLocation();
-    const [loginUserData, setLoginUserData] = React.useState<ILoginUserData>({
-        email: '',
-        password: ''
-    });
-    const [registerUserData, setRegisterUserData] = React.useState<IRegisterUserData>({
-        email: '',
-        firstName: '',
-        userName: '',
-        password: '',
-        repeatPassword: '',
-    });
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const {
+        register,
+        formState: {errors},
+        handleSubmit,
+    } = useForm<FieldValues>();
+
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         try {
             switch (location.pathname) {
                 case '/login': {
+                    console.log(data);
 
-                    for (const key in loginUserData) {
-                        if (!loginUserData[key as keyof ILoginUserData].trim()) {
-                            throw new Error(AppErrors.FILL_IN_ALL_FIELDERS_OF_LOGIN);
-                        }
-                    }
-                    const userData = await axiosInstance.post('auth/login', loginUserData);
-                    await dispatch(login(userData.data));
-                    navigate('/');
+                    //     for (const key in loginUserData) {
+                    //         if (!loginUserData[key as keyof ILoginUserData].trim()) {
+                    //             throw new Error(AppErrors.FILL_IN_ALL_FIELDERS_OF_LOGIN);
+                    //         }
+                    //     }
+                    // const userData = await axiosInstance.post('auth/login', data);
+                    // await dispatch(login(userData.data));
+                    // navigate('/');
                     break;
                 }
                 case '/register': {
-                    for (const key in registerUserData) {
-                        if (!registerUserData[key as keyof IRegisterUserData].trim()) {
-                            throw new Error(AppErrors.FILL_IN_ALL_FIELDERS_OF_REGISTERS);
-                        }
-                    }
-                    if (registerUserData.password !== registerUserData.repeatPassword) {
-                        throw new Error(AppErrors.PASSWORDS_DO_NOT_MATCH);
-                    }
-
-                    const newUser = {
-                        firstName: registerUserData.firstName,
-                        userName: registerUserData.userName,
-                        email: registerUserData.email,
-                        password: registerUserData.password
-                    };
-                    const userData = await axiosInstance.post('auth/register', newUser);
-                    const loginData = {
-                        email: userData.data.email,
-                        password: registerUserData.password
-                    };
-                    const registeredUserData = await axiosInstance.post('auth/login', loginData);
-                    await dispatch(login(registeredUserData.data));
-                    navigate('/');
+                    console.log(data);
+                    // for (const key in registerUserData) {
+                    //     if (!registerUserData[key as keyof IRegisterUserData].trim()) {
+                    //         throw new Error(AppErrors.FILL_IN_ALL_FIELDERS_OF_REGISTERS);
+                    //     }
+                    // }
+                    // if (registerUserData.password !== registerUserData.repeatPassword) {
+                    //     throw new Error(AppErrors.PASSWORDS_DO_NOT_MATCH);
+                    // }
+                    //
+                    // const newUser = {
+                    //     firstName: registerUserData.firstName,
+                    //     userName: registerUserData.userName,
+                    //     email: registerUserData.email,
+                    //     password: registerUserData.password
+                    // };
+                    // const userData = await axiosInstance.post('auth/register', newUser);
+                    // const loginData = {
+                    //     email: userData.data.email,
+                    //     password: registerUserData.password
+                    // };
+                    // const registeredUserData = await axiosInstance.post('auth/login', loginData);
+                    // await dispatch(login(registeredUserData.data));
+                    // navigate('/');
                     break;
                 }
                 default:
@@ -99,7 +96,7 @@ export const AuthRootComponent: React.FC = (): React.ReactElement => {
             <div className='root'>
                 <form
                         className='form'
-                        onSubmit={handleSubmit}
+                        onSubmit={handleSubmit(onSubmit)}
                 >
                     <Box
                             display='flex'
@@ -112,21 +109,20 @@ export const AuthRootComponent: React.FC = (): React.ReactElement => {
                             borderRadius={5}
                             boxShadow={'5px 5px 10px #ccc'}
                     >
-                        {location.pathname === '/login'
-                                ? <LoginPage
+                        {location.pathname === '/login' && (
+                                <LoginPage
+                                        errors={errors}
+                                        register={register}
                                         navigate={navigate}
-                                        setUserData={setLoginUserData}
-                                />
-                                : location.pathname === '/register'
-                                        ? <RegisterPage
-                                                navigate={navigate}
-                                                setUserData={setRegisterUserData}
-                                        />
-                                        : null}
+                                />)}
+                        {location.pathname === '/register' && (
+                                <RegisterPage
+                                        register={register}
+                                        navigate={navigate}
+                                />)}
                     </Box>
                 </form>
             </div>
     );
-
 };
 

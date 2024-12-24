@@ -1,20 +1,16 @@
 import React from 'react';
 import {Button, TextField, Typography} from '@mui/material';
-import {ILoginUserData} from '../index';
 import {NavigateFunction} from 'react-router-dom';
+import {FieldValues, UseFormRegister,} from 'react-hook-form';
+import {FieldErrors} from 'react-hook-form';
 
-interface IProps {
-    setUserData: React.Dispatch<React.SetStateAction<ILoginUserData>>;
+interface IProps<TFieldValues extends FieldValues = FieldValues> {
     navigate: NavigateFunction;
+    register: UseFormRegister<TFieldValues>;
+    errors: FieldErrors<TFieldValues>;
 }
 
-export const LoginPage: React.FC<IProps> = ({setUserData, navigate}): React.ReactElement => {
-    const handleChange = (value: string, propName: string) => {
-        setUserData((prev) => ({
-            ...prev,
-            [propName]: value
-        }));
-    };
+export const LoginPage: React.FC<IProps> = ({navigate, register, errors}): React.ReactElement => {
     return (
             <>
                 <Typography
@@ -42,8 +38,17 @@ export const LoginPage: React.FC<IProps> = ({setUserData, navigate}): React.Reac
                         placeholder='Введите ваш email'
                         margin='normal'
                         fullWidth={true}
-                        onChange={(e) => handleChange(e.target.value, 'email')}
+                        {...register('email', {
+                            required: 'Field is required',
+                            pattern: {
+                                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                message: 'Email is not correct'
+                            }
+                        })}
+                        error={!!errors.email}
+                        helperText={`${errors.email?.message}`}
                 />
+                <div>{errors.root?.message}</div>
                 <TextField
                         type='password'
                         label='Password'
@@ -51,8 +56,14 @@ export const LoginPage: React.FC<IProps> = ({setUserData, navigate}): React.Reac
                         placeholder='Введите ваш пароль'
                         margin='normal'
                         fullWidth={true}
-                        onChange={(e) => handleChange(e.target.value, 'password')}
+                        {...register('password', {
+                            required: 'Field is required',
+                            minLength: 6,
+                        })}
+                        error={!!errors.password}
+                        helperText={`${errors.password?.message}`}
                 />
+                <div>{errors.root?.message}</div>
                 <Button
                         type='submit'
                         variant='contained'
