@@ -1,13 +1,12 @@
 import React from 'react';
-import {ILayout} from '../../common/types/layout';
 import {TopBar} from '../top-bar';
-import {useLocation} from 'react-router-dom';
+import {Outlet, useLocation} from 'react-router-dom';
 import {useMediaQuery} from '@mui/material';
 import {Sidebar} from '../sidebar';
-import {StyledBox, StyledMainBox} from './styles';
+import {StyledContentBox, StyledRootBox} from './styles';
 
-export const LayoutComponent: React.FC<ILayout> = ({children}) => {
-    const [isOpen, setIsOpen] = React.useState<boolean>(true);
+export const LayoutComponent = () => {
+    const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const location = useLocation();
     const isNonMobile = useMediaQuery('(min-width:600px)');
     return (
@@ -15,21 +14,24 @@ export const LayoutComponent: React.FC<ILayout> = ({children}) => {
             location.pathname === '/register'
                     ? (
                             <>
-                                {children}
+                                <Outlet/>
                             </>
                     ) : (
-                            <StyledMainBox isNonMobile={isNonMobile}>
+                            <StyledRootBox isNonMobile={isNonMobile}>
                                 <Sidebar
                                         isNonMobile={isNonMobile}
                                         drawerWidth='250px'
                                         isOpen={isOpen}
                                         setIsOpen={setIsOpen}
                                 />
-                                <StyledBox>
-                                    <TopBar/>
-                                    {children}
-                                </StyledBox>
-                            </StyledMainBox>
+                                <StyledContentBox>
+                                    <TopBar
+                                            isOpen={isOpen}
+                                            setIsOpen={setIsOpen}
+                                    />
+                                    <Outlet/>
+                                </StyledContentBox>
+                            </StyledRootBox>
                     )
     );
 };
