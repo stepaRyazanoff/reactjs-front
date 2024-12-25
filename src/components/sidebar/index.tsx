@@ -10,11 +10,6 @@ import {
     ListItemText,
 } from '@mui/material';
 import {
-    ArrowForwardIosOutlined,
-    ArrowBackIosNewOutlined,
-    LogoutOutlined
-} from '@mui/icons-material';
-import {
     StyledSidebarHeaderBox,
     StyledDrawer,
     StyledListItemButton,
@@ -24,7 +19,7 @@ import {
 } from './styles';
 import {FlexBetween} from '../flex-between';
 import {navMenu} from '../../common/mock/navigate';
-
+import {ArrowBackIosNewOutlined, LogoutOutlined} from '@mui/icons-material';
 
 interface IProps {
     isNonMobile: boolean;
@@ -33,13 +28,13 @@ interface IProps {
     setIsOpen: (value: boolean) => void;
 }
 
-export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, setIsOpen}) => {
+export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, setIsOpen}): React.ReactElement => {
     const [active, setActive] = React.useState<string>('');
     const {pathname} = useLocation();
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        setActive(pathname.substring(1));
+        setActive(pathname);
     }, [pathname]);
 
     return (
@@ -71,7 +66,11 @@ export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, set
                                 <StyledNavList>
                                     {navMenu.map((el) => (
                                             <ListItem key={el.id}>
-                                                <StyledListItemButton onClick={() => navigate(`${el.path}`)}>
+                                                <StyledListItemButton
+                                                        active={active}
+                                                        path={el.path}
+                                                        onClick={() => navigate(`${el.path}`)}
+                                                >
                                                     <ListItemIcon>
                                                         {el.icon}
                                                     </ListItemIcon>

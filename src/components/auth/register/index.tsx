@@ -1,11 +1,18 @@
 import React from 'react';
-import {Button, TextField, Typography} from '@mui/material';
+import {TextField} from '@mui/material';
 import {NavigateFunction} from 'react-router-dom';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {InputRegisterData} from '../../../common/types';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {registerSchema} from '../../../utils/yup';
-import {StyledAuthBox} from './styles';
+import {
+    StyledAuthBox,
+    StyledAuthLink,
+    StyledFormBottomLink,
+    StyledHeaderText,
+    StyledSubheaderText,
+    StyledSubmitButton,
+} from '../styles';
 
 interface IProps {
     navigate: NavigateFunction;
@@ -23,26 +30,12 @@ export const RegisterForm: React.FC<IProps> = ({navigate, onSubmit}): React.Reac
     return (
             <form style={{width: '80%'}} onSubmit={handleSubmit(onSubmit)}>
                 <StyledAuthBox>
-                    <Typography
-                            variant='h2'
-                            sx={{
-                                fontFamily: 'Poppins',
-                                textAlign: 'center'
-                            }}
-                    >
+                    <StyledHeaderText>
                         Регистрация
-                    </Typography>
-                    <Typography
-                            variant='body1'
-                            sx={{
-                                fontFamily: 'Poppins',
-                                padding: 2,
-                                textAlign: 'center'
-                            }}
-                    >
+                    </StyledHeaderText>
+                    <StyledSubheaderText variant='body1'>
                         Введите данные для регистрации
-
-                    </Typography>
+                    </StyledSubheaderText>
                     <TextField
                             label='Имя'
                             variant='outlined'
@@ -95,36 +88,18 @@ export const RegisterForm: React.FC<IProps> = ({navigate, onSubmit}): React.Reac
                             error={!!errors.repeatPassword}
                             helperText={errors.repeatPassword?.message || ''}
                     />
-                    <Button
-                            type='submit'
+                    <StyledSubmitButton
                             variant='contained'
-                            sx={{
-                                fontFamily: 'Poppins',
-                                marginTop: 2,
-                                marginBottom: 2,
-                                width: '60%',
-                            }}
+                            type='submit'
                     >
                         Зарегестрироваться
-                    </Button>
+                    </StyledSubmitButton>
 
-                    <Typography
-                            variant='body1'
-                            sx={{
-                                fontFamily: 'Poppins',
-                            }}
-                    >У вас есть аккаунт?
-                        <span
-                                style={{
-                                    color: '#1900D5',
-                                    cursor: 'pointer',
-                                    marginLeft: '10px'
-                                }}
-                                onClick={() => navigate('/login')}
-                        >
-                        Авторизация
-                    </span>
-                    </Typography>
+                    <StyledFormBottomLink variant='body1'>У вас есть аккаунт?
+                        <StyledAuthLink onClick={() => navigate('/login')}>
+                            Авторизация
+                        </StyledAuthLink>
+                    </StyledFormBottomLink>
                 </StyledAuthBox>
             </form>
     );

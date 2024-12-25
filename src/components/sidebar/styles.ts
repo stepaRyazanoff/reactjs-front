@@ -42,15 +42,25 @@ export const StyledHeaderTypography = styled(Typography)(({theme}: { theme: Them
 
 export const StyledNavList = styled(Box,)(() => ({marginBottom: '55px'}));
 
-export const StyledListItemButton = styled(ListItemButton)(({theme}: { theme: Theme }) => {
+export const StyledListItemButton = styled(ListItemButton,
+        {shouldForwardProp: (prop) => !['active', 'path'].includes(prop as string)})<{
+    active?: string;
+    path?: string;
+}>(({theme, active, path}) => {
     const colors = tokens(theme.palette.mode);
     return {
+        backgroundColor: path && active === path ? '#1900D5' : '',
+        color: path && active === path ? `${colors.white.DEFAULT}` : '',
+        borderRadius: '10px',
+        '& .MuiSvgIcon-root': {
+            color: path && active === path ? `${colors.white.DEFAULT}` : `${colors.secondary.DEFAULT}`,
+        },
         '&:hover': {
-            backgroundColor: '#1900D5 !important',
-            borderRadius: '4px',
+            backgroundColor: '#1900D5',
+            borderRadius: '10px',
             color: `${colors.white.DEFAULT}`,
             '& .MuiSvgIcon-root': {
-                color: `${colors.white.DEFAULT}`,
+                color:  `${colors.white.DEFAULT}`,
             }
         }
     };

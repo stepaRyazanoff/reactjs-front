@@ -25,7 +25,7 @@ interface IProps {
     setIsOpen: (value: boolean) => void;
 }
 
-export const TopBar: React.FC<IProps> = ({isOpen, setIsOpen}) => {
+export const TopBar: React.FC<IProps> = ({isOpen, setIsOpen}): React.ReactElement => {
     const user = useAppSelector((state) => state.auth.user);
     const theme = useTheme();
     const colorMode = useContext(ColorModeContext);
