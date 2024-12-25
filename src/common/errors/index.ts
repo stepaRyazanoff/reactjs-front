@@ -1,7 +1,9 @@
 export const AppErrors = {
-    PASSWORDS_DO_NOT_MATCH: 'Пароли не совпадают.',
-    FILL_IN_ALL_FIELDERS_OF_LOGIN: 'Заполните все поля для входа.',
-    FILL_IN_ALL_FIELDERS_OF_REGISTERS: 'Заполните все поля для регистрации.',
-    INCORRECT_PATH: 'Некорректный путь.',
-    UNKNOWN_ERROR: 'Неизвестная ошибка:'
+    PasswordsDoNotMatch: 'Пароли не совпадают',
+    InvalidEmail: 'Введите коректный email',
+    FieldIsRequired: 'Это поле обязательно для заполнения',
+    MinLengthPassword: 'Пароль должен содержать не менне 6 символов',
+    IncorrectPasswordFormat: 'Пароль должен содержать хотя бы одну заглавную букву',
+    UnknownError: 'Неизвестная ошибка:',
+    IncorrectPath: 'не корректный путь'
 };

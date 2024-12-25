@@ -1,3 +1,6 @@
+import {loginSchema, registerSchema} from '../../utils/yup';
+import {InferType} from 'yup';
+
 interface IWatchList {
     id: number;
     name: string;
@@ -42,4 +45,6 @@ export type Colors = {
     blue: string;
 };
 
+export type InputLoginData = InferType<typeof loginSchema>;
+export type InputRegisterData = InferType<typeof registerSchema>;
 
