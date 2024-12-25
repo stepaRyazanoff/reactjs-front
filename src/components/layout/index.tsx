@@ -5,7 +5,7 @@ import {useMediaQuery} from '@mui/material';
 import {Sidebar} from '../sidebar';
 import {StyledContentBox, StyledRootBox} from './styles';
 
-export const LayoutComponent = () => {
+export const LayoutComponent: React.FC = (): React.ReactElement => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const location = useLocation();
     const isNonMobile = useMediaQuery('(min-width:600px)');

@@ -157,6 +157,7 @@ export function useMode(): [IColorModeContextType, Theme] {
         toggleColorMode: () => setMode((prev) => (prev === 'light' ? 'dark' : 'light'))
     }), []);
     const theme: Theme = React.useMemo(() => createTheme(themeSettings(mode)), [mode]);
+
     return [colorMode, theme];
 }
 

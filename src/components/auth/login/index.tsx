@@ -1,11 +1,19 @@
 import React from 'react';
-import {Button, TextField, Typography} from '@mui/material';
+import {TextField} from '@mui/material';
 import {NavigateFunction} from 'react-router-dom';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {InputLoginData} from '../../../common/types';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {loginSchema} from '../../../utils/yup';
-import {StyledAuthBox} from './styles';
+import {
+    StyledAuthBox,
+    StyledForm,
+    StyledFormBottomLink,
+    StyledHeaderText,
+    StyledAuthLink,
+    StyledSubheaderText,
+    StyledSubmitButton,
+} from '../styles';
 
 interface IProps {
     navigate: NavigateFunction;
@@ -21,28 +29,14 @@ export const LoginForm: React.FC<IProps> = ({navigate, onSubmit}): React.ReactEl
         resolver: yupResolver(loginSchema)
     });
     return (
-
-            <form style={{width: '80%'}} onSubmit={handleSubmit(onSubmit)}>
+            <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <StyledAuthBox>
-                    <Typography
-                            variant='h2'
-                            sx={{
-                                fontFamily: 'Poppins',
-                                textAlign: 'center'
-                            }}
-                    >
+                    <StyledHeaderText>
                         Авторизация
-                    </Typography>
-                    <Typography
-                            variant='body1'
-                            sx={{
-                                fontFamily: 'Poppins',
-                                padding: 2,
-                                textAlign: 'center'
-                            }}
-                    >
+                    </StyledHeaderText>
+                    <StyledSubheaderText variant='body1'>
                         Введите ваш логин и пароль
-                    </Typography>
+                    </StyledSubheaderText>
 
                     <TextField
                             label='Email'
@@ -54,7 +48,6 @@ export const LoginForm: React.FC<IProps> = ({navigate, onSubmit}): React.ReactEl
                             error={!!errors.email}
                             helperText={errors.email?.message || ''}
                     />
-                    <div>{errors.root?.message}</div>
                     <TextField
                             type='password'
                             label='Password'
@@ -66,40 +59,22 @@ export const LoginForm: React.FC<IProps> = ({navigate, onSubmit}): React.ReactEl
                             error={!!errors.password}
                             helperText={errors.password?.message || ''}
                     />
-                    <div>{errors.root?.message}</div>
-                    <Button
-                            type='submit'
+                    <StyledSubmitButton
                             variant='contained'
-                            sx={{
-                                fontFamily: 'Poppins',
-                                marginTop: 2,
-                                marginBottom: 2,
-                                width: '60%',
-                            }}
+                            type='submit'
                     >
                         Войти
-                    </Button>
+                    </StyledSubmitButton>
 
-                    <Typography
-                            variant='body1'
-                            sx={{
-                                fontFamily: 'Poppins',
-                            }}
-                    >У вас нет аккаунта?
-                        <span
-                                style={{
-                                    color: '#1900D5',
-                                    cursor: 'pointer',
-                                    marginLeft: '10px'
-                                }}
-                                onClick={() => navigate('/register')}
-                        >
-                        Регистрация
-                    </span>
-                    </Typography>
+                    <StyledFormBottomLink variant='body1'>
+                        У вас нет аккаунта?
+                        <StyledAuthLink onClick={() => navigate('/register')}>
+                            Регистрация
+                        </StyledAuthLink>
+                    </StyledFormBottomLink>
 
                 </StyledAuthBox>
-            </form>
+            </StyledForm>
     );
 };
 
