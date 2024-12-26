@@ -1,21 +1,34 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IAuthState, IAuthUserData} from '../../../common/types';
+import {IAuthState, IAuthUserResponse} from '../../../common/types';
+import {loginUser} from '../../thunks/auth';
 
 const initialState: IAuthState = {
     user: null,
-    isLogged: false
+    isLogged: false,
+    isLoading: false,
 };
 
-export const authSlice = createSlice({
+export const loginSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {
-        login: (state: IAuthState, action: PayloadAction<IAuthUserData>) => {
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(loginUser.pending, (state: IAuthState) => {
+            state.isLogged = false;
+            state.isLoading = true;
+        });
+
+        builder.addCase(loginUser.fulfilled, (state: IAuthState, action: PayloadAction<IAuthUserResponse>) => {
             state.user = action.payload.user;
             state.isLogged = true;
-        }
+            state.isLoading = false;
+        });
+
+        builder.addCase(loginUser.rejected, (state: IAuthState) => {
+            state.isLogged = false;
+            state.isLoading = false;
+        });
     }
 });
 
-export const {login} = authSlice.actions;
-export default authSlice.reducer;
+export default loginSlice.reducer;
