@@ -23,11 +23,19 @@ export interface IPublicUser {
 export interface IAuthState {
     user: IPublicUser | null;
     isLogged: boolean;
+    isLoading: boolean;
 }
 
-export interface IAuthUserData {
+export interface IAuthUserResponse {
     user: IPublicUser;
     token: string;
+}
+
+export interface IUserRegisterData {
+    firstName: string;
+    userName: string;
+    email: string;
+    password: string;
 }
 
 export interface IColorModeContextType {

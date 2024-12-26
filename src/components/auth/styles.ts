@@ -1,5 +1,5 @@
 import {Box, styled, Typography} from '@mui/material';
-import {AppButton} from '../app-button';
+import {AppLoadingButton} from '../loading-button';
 
 export const StyledRootBox = styled(Box)(() => ({
     display: 'flex',
@@ -34,7 +34,7 @@ export const StyledSubheaderText = styled(Typography)(() => ({
     padding: '10px',
 }));
 
-export const StyledSubmitButton = styled(AppButton)(() => ({
+export const StyledSubmitButton = styled(AppLoadingButton)(() => ({
     marginTop: '10px',
     marginBottom: '10px',
     width: '60%',

@@ -2,27 +2,25 @@ import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {LoginForm} from './login';
 import {RegisterForm} from './register';
-import {axiosInstance} from '../../utils/axios';
-import {useAppDispatch} from '../../utils/hooks';
-import {AppDispatch} from '../../store';
-import {login} from '../../store/slices/auth';
+import {useAppDispatch, useAppSelector} from '../../utils/hooks';
 import {AppErrors} from '../../common/errors';
 import {SubmitHandler} from 'react-hook-form';
 import {InputLoginData, InputRegisterData} from '../../common/types';
 import {StyledRootBox} from './styles';
+import {loginUser, registerUser} from '../../store/thunks/auth';
 
 export const AuthRootComponent: React.FC = (): React.ReactElement => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
+    const isLoading = useAppSelector((state) => state.auth.isLoading);
     const location = useLocation();
 
     const onSubmit: SubmitHandler<InputLoginData | InputRegisterData> = async (data) => {
+        console.log(data);
         try {
             switch (location.pathname) {
                 case '/login': {
-
-                    const userData = await axiosInstance.post('auth/login', data as InputLoginData);
-                    dispatch(login(userData.data));
+                    await dispatch(loginUser(data));
                     navigate('/');
                     break;
                 }
@@ -31,20 +29,14 @@ export const AuthRootComponent: React.FC = (): React.ReactElement => {
                     if (data.password !== registerData.repeatPassword) {
                         throw new Error(AppErrors.PasswordsDoNotMatch);
                     }
-
                     const newUser = {
                         firstName: registerData.firstName,
                         userName: registerData.userName,
                         email: registerData.email,
                         password: registerData.password
                     };
-                    const userData = await axiosInstance.post('auth/register', newUser);
-                    const loginData = {
-                        email: userData.data.email,
-                        password: data.password
-                    };
-                    const registeredUserData = await axiosInstance.post('auth/login', loginData);
-                    dispatch(login(registeredUserData.data));
+
+                    await dispatch(registerUser(newUser));
                     navigate('/');
                     break;
                 }
@@ -66,12 +58,14 @@ export const AuthRootComponent: React.FC = (): React.ReactElement => {
             <StyledRootBox>
                 {location.pathname === '/login' && (
                         <LoginForm
+                                isLoading={isLoading}
                                 onSubmit={onSubmit}
                                 navigate={navigate}
                         />
                 )}
                 {location.pathname === '/register' && (
                         <RegisterForm
+                                isLoading={isLoading}
                                 onSubmit={onSubmit}
                                 navigate={navigate}
                         />)}

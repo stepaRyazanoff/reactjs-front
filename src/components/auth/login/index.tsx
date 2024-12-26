@@ -18,9 +18,10 @@ import {
 interface IProps {
     navigate: NavigateFunction;
     onSubmit: SubmitHandler<InputLoginData>;
+    isLoading: boolean;
 }
 
-export const LoginForm: React.FC<IProps> = ({navigate, onSubmit}): React.ReactElement => {
+export const LoginForm: React.FC<IProps> = ({navigate, onSubmit, isLoading}): React.ReactElement => {
     const {
         register,
         formState: {errors},
@@ -60,6 +61,7 @@ export const LoginForm: React.FC<IProps> = ({navigate, onSubmit}): React.ReactEl
                             helperText={errors.password?.message || ''}
                     />
                     <StyledSubmitButton
+                            loading={isLoading}
                             variant='contained'
                             type='submit'
                     >

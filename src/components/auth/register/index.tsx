@@ -17,9 +17,10 @@ import {
 interface IProps {
     navigate: NavigateFunction;
     onSubmit: SubmitHandler<InputRegisterData>;
+    isLoading: boolean;
 }
 
-export const RegisterForm: React.FC<IProps> = ({navigate, onSubmit}): React.ReactElement => {
+export const RegisterForm: React.FC<IProps> = ({navigate, onSubmit, isLoading}): React.ReactElement => {
     const {
         register,
         formState: {errors},
@@ -89,6 +90,7 @@ export const RegisterForm: React.FC<IProps> = ({navigate, onSubmit}): React.Reac
                             helperText={errors.repeatPassword?.message || ''}
                     />
                     <StyledSubmitButton
+                            loading={isLoading}
                             variant='contained'
                             type='submit'
                     >
