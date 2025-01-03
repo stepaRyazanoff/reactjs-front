@@ -16,7 +16,6 @@ export const AuthRootComponent: React.FC = (): React.ReactElement => {
     const location = useLocation();
 
     const onSubmit: SubmitHandler<InputLoginData | InputRegisterData> = async (data) => {
-        console.log(data);
         try {
             switch (location.pathname) {
                 case '/login': {
