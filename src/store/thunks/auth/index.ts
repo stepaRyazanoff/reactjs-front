@@ -13,6 +13,7 @@ export const loginUser = createAsyncThunk<IAuthUserResponse, InputLoginData, { r
             try {
                 const userData = await axiosInstance.post('auth/login', data);
                 sessionStorage.setItem('token', userData.data.token);
+                sessionStorage.setItem('userName', userData.data.user.firstName);
                 return userData.data;
             } catch (err) {
                 const error = err as AxiosError;

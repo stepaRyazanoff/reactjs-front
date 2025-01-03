@@ -17,7 +17,6 @@ import {
     StyledMenuIcon
 } from './styles';
 import {ColorModeContext} from '../../theme';
-import {useAppSelector} from '../../utils/hooks';
 import {FlexBetween} from '../flex-between';
 
 interface IProps {
@@ -26,7 +25,7 @@ interface IProps {
 }
 
 export const TopBar: React.FC<IProps> = ({isOpen, setIsOpen}): React.ReactElement => {
-    const user = useAppSelector((state) => state.auth.user);
+    const userName = sessionStorage.getItem('userName');
     const theme = useTheme();
     const colorMode = useContext(ColorModeContext);
 
@@ -35,7 +34,7 @@ export const TopBar: React.FC<IProps> = ({isOpen, setIsOpen}): React.ReactElemen
                 <StyledToolbar>
                     <FlexBetween>
                         <StyledMenuIcon onClick={() => setIsOpen(!isOpen)}/>
-                        <Typography variant='h3'>Welcome {user?.firstName}</Typography>
+                        <Typography variant='h3'>Welcome {userName}</Typography>
                     </FlexBetween>
                     <StyledTopBarBox>
                         <StyledTopBarIcons onClick={colorMode.toggleColorMode}>

@@ -39,7 +39,8 @@ export const StyledTopBarIcons = styled(Grid2)(({theme}: { theme: Theme }) => {
         display: 'flex',
         alignItems: 'center',
         paddingRight: '35px',
-        borderRight: `1px solid ${colors.borderColor}`
+        borderRight: `1px solid ${colors.borderColor}`,
+        flexWrap: 'wrap',
     };
 });
 
