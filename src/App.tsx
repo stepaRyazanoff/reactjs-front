@@ -2,7 +2,7 @@ import React from 'react';
 import {Home} from './pages/home';
 import {Route, Routes} from 'react-router-dom';
 import {PrivateRoute} from './utils/router/private-route';
-import {AuthRootComponent} from './components/auth';
+import {AuthRootComponent} from './pages/auth';
 import {ColorModeContext, useMode} from './theme';
 import {CssBaseline, ThemeProvider} from '@mui/material';
 import {Watchlist} from './pages/watchlist';
