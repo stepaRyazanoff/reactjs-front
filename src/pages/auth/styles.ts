@@ -1,5 +1,5 @@
 import {Box, styled, Typography} from '@mui/material';
-import {AppLoadingButton} from '../loading-button';
+import {AppLoadingButton} from '../../components/loading-button';
 
 export const StyledRootBox = styled(Box)(() => ({
     display: 'flex',

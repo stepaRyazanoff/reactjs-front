@@ -7,7 +7,7 @@ export const getFavoriteAssets = createAsyncThunk<IAssetResponse, string, { reje
         'coins/markets',
         async (data, thunkAPI) => {
             try {
-                const assets = await coinGeckoApi.get(`/coins/${data}/market_chart?vs_currency=usd&days=1`);
+                const assets = await coinGeckoApi.get(`coins/${data}/market_chart?vs_currency=usd&days=90`);
                 return {name: data, data: assets.data};
             } catch (err) {
                 const error = err as AxiosError;
