@@ -8,7 +8,7 @@ import {
     ItemCapitalize,
     ItemDetails,
     ItemPrice,
-    StyledChartItems,
+    StyledAreaChartBlock, StyledLineChartBlock,
     StyledRootBox
 } from './styles';
 import {
@@ -16,6 +16,7 @@ import {
     TrendingDown
 } from '@mui/icons-material';
 import {AreaChart} from '../../components/charts/area-chart';
+import {LineChart} from '../../components/charts/line-chart';
 
 export const Home: React.FC = (): React.ReactElement => {
     const favoriteAssets: IAssetResponse[] = useAppSelector((state) => state.assets.favoriteAssets);
@@ -49,7 +50,7 @@ export const Home: React.FC = (): React.ReactElement => {
                                 <Grid2 size={{lg: 6, sm: 6, xs: 12}}
                                        key={e.name}
                                 >
-                                    <StyledChartItems container>
+                                    <StyledAreaChartBlock container>
                                         <Grid2 size={{lg: 6, sm: 6, xs: 12}}>
                                             <AssetName> {e.name}</AssetName>
                                             <ItemDetails>
@@ -68,11 +69,16 @@ export const Home: React.FC = (): React.ReactElement => {
                                         <Grid2 size={{lg: 6, sm: 6, xs: 12}}>
                                             <AreaChart data={e.prices}/>
                                         </Grid2>
-                                    </StyledChartItems>
+                                    </StyledAreaChartBlock>
                                 </Grid2>
                         );
                     })}
                 </Grid2>
+                {favoriteAssets.length > 0 && <StyledLineChartBlock container>
+                    <Grid2 size={{lg: 12, sm: 12, xs: 12}}>
+                        <LineChart data={favoriteAssets}/>
+                    </Grid2>
+                </StyledLineChartBlock>}
             </StyledRootBox>
     );
 };

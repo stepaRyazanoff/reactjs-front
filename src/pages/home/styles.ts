@@ -5,14 +5,15 @@ export const StyledRootBox = styled(Box)(() => ({
     padding: '32px'
 }));
 
-export const StyledChartItems = styled(Grid2)(({theme}: { theme: Theme }) => {
+export const StyledAreaChartBlock = styled(Grid2)(({theme}: { theme: Theme }) => {
     const colors = tokens(theme.palette.mode);
     return {
         padding: '20px 16px',
         backgroundColor: `${theme.palette.mode === 'light' ? colors.primary.DEFAULT : colors.primary[600]}`,
         minHeight: 185,
         border: `1px solid ${colors.borderColor}`,
-        borderRadius: 12
+        borderRadius: 12,
+        marginBottom: 32
     };
 });
 
@@ -44,5 +45,16 @@ export const ItemCapitalize = styled(Box)(({theme}: { theme: Theme }) => {
         fontWeight: 400,
         fontSize: 18,
         lineHeight: '21px'
+    };
+});
+
+export const StyledLineChartBlock = styled(Grid2)(({theme}: { theme: Theme }) => {
+    const colors = tokens(theme.palette.mode);
+    return {
+        padding: '20px 16px',
+        backgroundColor: `${theme.palette.mode === 'light' ? colors.primary.DEFAULT : colors.primary[600]}`,
+        minHeight: 270,
+        border: `1px solid ${colors.borderColor}`,
+        borderRadius: 12
     };
 });
