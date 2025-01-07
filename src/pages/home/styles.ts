@@ -37,7 +37,7 @@ export const ItemPrice = styled('h3')(() => ({
     lineHeight: '48px',
 }));
 
-export const ItemCapitalize = styled('p')(({theme}: { theme: Theme }) => {
+export const ItemCapitalize = styled(Box)(({theme}: { theme: Theme }) => {
     const colors = tokens(theme.palette.mode);
     return {
         color: `${colors.secondary.DEFAULT}`,
