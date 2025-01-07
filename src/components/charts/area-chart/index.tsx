@@ -25,7 +25,7 @@ ChartJS.register(
 );
 
 interface IProps {
-    data: [number[]];
+    data: number[][];
 }
 
 export const options = {
