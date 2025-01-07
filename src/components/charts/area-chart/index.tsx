@@ -10,8 +10,8 @@ import {
     Filler,
     Legend, ScriptableContext,
 } from 'chart.js';
-import {Line} from 'react-chartjs-2';
 import moment from 'moment';
+import {Line} from 'react-chartjs-2';
 
 ChartJS.register(
         CategoryScale,

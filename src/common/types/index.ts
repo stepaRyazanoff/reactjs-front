@@ -33,17 +33,17 @@ export interface IAssets {
 export interface ISingleAsset {
     ath: number;
     ath_change_percentage: number;
-    ath_date: string;
+    ath_date: Date;
     atl: number;
     atl_change_percentage: number;
-    atl_date: string;
+    atl_date: Date;
     circulating_supply: number;
     current_price: number;
     fully_diluted_valuation: number;
     high_24h: number;
     id: string;
     image: string;
-    last_updated: string;
+    last_updated: Date;
     low_24h: number;
     market_cap: number;
     market_cap_change_24h: number;
