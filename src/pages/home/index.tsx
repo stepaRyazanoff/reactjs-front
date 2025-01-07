@@ -11,6 +11,10 @@ import {
     StyledChartItems,
     StyledRootBox
 } from './styles';
+import {
+    TrendingUp,
+    TrendingDown
+} from '@mui/icons-material';
 import {AreaChart} from '../../components/charts/area-chart';
 
 export const Home: React.FC = (): React.ReactElement => {
@@ -38,8 +42,9 @@ export const Home: React.FC = (): React.ReactElement => {
             <StyledRootBox>
                 <Grid2 container spacing={2}>
                     {favoriteAssets.map((e) => {
-                        const currentPrice = e.data.prices[0];
-                        const currentCap = e.data.market_caps[0];
+                        const currentPrice = e.singleAsset.map((e) => e.current_price);
+                        // const currentCap = e.singleAsset.map((e) => e.market_cap);
+                        const changePrice = e.singleAsset.map((e) => e.price_change_percentage_24h);
                         return (
                                 <Grid2 size={{lg: 6, sm: 6, xs: 12}}
                                        key={e.name}
@@ -48,12 +53,20 @@ export const Home: React.FC = (): React.ReactElement => {
                                         <Grid2 size={{lg: 6, sm: 6, xs: 12}}>
                                             <AssetName> {e.name}</AssetName>
                                             <ItemDetails>
-                                                <ItemPrice>$ {currentPrice[1].toFixed(2)}</ItemPrice>
-                                                <ItemCapitalize>$ {currentCap[1].toFixed(0)}</ItemCapitalize>
+                                                <ItemPrice>${currentPrice}</ItemPrice>
+                                                <ItemCapitalize sx={{
+                                                    '& > :first-of-type': {marginRight: '5px'},
+                                                    color: +changePrice > 0 ? 'green' : 'brown',
+                                                }}>
+                                                    {Number(changePrice) > 0
+                                                            ? <TrendingUp/>
+                                                            : <TrendingDown/>}
+                                                    <span>{Number(changePrice).toFixed(2)}%</span>
+                                                </ItemCapitalize>
                                             </ItemDetails>
                                         </Grid2>
                                         <Grid2 size={{lg: 6, sm: 6, xs: 12}}>
-                                            <AreaChart data={e.data.prices}/>
+                                            <AreaChart data={e.prices}/>
                                         </Grid2>
                                     </StyledChartItems>
                                 </Grid2>
