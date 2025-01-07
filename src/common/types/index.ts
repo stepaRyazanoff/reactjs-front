@@ -61,7 +61,7 @@ export interface ISingleAsset {
 
 export interface IAssetResponse {
     name: string;
-    prices: [number[]];
+    prices: number[][];
     singleAsset: ISingleAsset[];
 }
 
