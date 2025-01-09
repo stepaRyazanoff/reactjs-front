@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppDispatch, useAppSelector} from '../../utils/hooks';
-import {getFavoriteAssets} from '../../store/thunks/assets';
-import {IAssetResponse} from '../../common/types';
+import {getFavoriteAssets, getTopPriceData} from '../../store/thunks/assets';
+import {IAssetResponse, ISingleAsset} from '../../common/types';
 import {Grid2} from '@mui/material';
 import {
     AssetName,
@@ -9,7 +9,7 @@ import {
     ItemDetails,
     ItemPrice,
     StyledAreaChartBlock, StyledLineChartBlock,
-    StyledRootBox
+    StyledRootBox, StyledTopPriceTable
 } from './styles';
 import {
     TrendingUp,
@@ -17,15 +17,14 @@ import {
 } from '@mui/icons-material';
 import {AreaChart} from '../../components/charts/area-chart';
 import {LineChart} from '../../components/charts/line-chart';
+import {TopPrice} from '../../components/top-price';
 
 export const Home: React.FC = (): React.ReactElement => {
     const favoriteAssets: IAssetResponse[] = useAppSelector((state) => state.assets.favoriteAssets);
-    // const isLoading = useAppSelector((state) => state.assets.isLoading);
+    const assets: ISingleAsset[] = useAppSelector((state) => state.assets.assets);
+    const sortedAssets = [...assets].sort((a, b) => b.current_price - a.current_price);
     const dispatch = useAppDispatch();
     const fetchDataRef = React.useRef(false);
-
-    // const favoriteAssetsNames = ['bitcoin', 'ethereum'];
-
     const fetchData = React.useCallback((data: string[]) => {
         data.forEach((n: string) => {
             dispatch(getFavoriteAssets(n));
@@ -36,15 +35,15 @@ export const Home: React.FC = (): React.ReactElement => {
         let assets = ['bitcoin', 'ethereum'];
         if (fetchDataRef.current) return;
         fetchData(assets);
+        dispatch(getTopPriceData());
         fetchDataRef.current = true;
-    }, [fetchData]);
+    }, [fetchData, dispatch]);
 
     return (
             <StyledRootBox>
                 <Grid2 container spacing={2}>
                     {favoriteAssets.map((e) => {
                         const currentPrice = e.singleAsset.map((e) => e.current_price);
-                        // const currentCap = e.singleAsset.map((e) => e.market_cap);
                         const changePrice = e.singleAsset.map((e) => e.price_change_percentage_24h);
                         return (
                                 <Grid2 size={{lg: 6, sm: 6, xs: 12}}
@@ -74,11 +73,20 @@ export const Home: React.FC = (): React.ReactElement => {
                         );
                     })}
                 </Grid2>
-                {favoriteAssets.length > 0 && <StyledLineChartBlock container>
-                    <Grid2 size={{lg: 12, sm: 12, xs: 12}}>
-                        <LineChart data={favoriteAssets}/>
-                    </Grid2>
-                </StyledLineChartBlock>}
+                {favoriteAssets.length > 0 && (
+                        <StyledLineChartBlock container>
+                            <Grid2 size={{lg: 12, sm: 12, xs: 12}}>
+                                <LineChart data={favoriteAssets}/>
+                            </Grid2>
+                        </StyledLineChartBlock>
+                )}
+                {sortedAssets.length > 0 && (
+                        <StyledTopPriceTable container>
+                            <Grid2 size={{lg: 12, sm: 12, xs: 12}}>
+                                <TopPrice assets={sortedAssets.slice(0, 15)}/>
+                            </Grid2>
+                        </StyledTopPriceTable>
+                )}
             </StyledRootBox>
     );
 };
