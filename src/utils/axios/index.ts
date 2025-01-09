@@ -12,7 +12,7 @@ export const axiosInstance = axios.create({
 export const coinGeckoApi = axios.create({
     baseURL: 'https://api.coingecko.com/api/v3', // Базовый URL для всех запросов
     headers: {
-        'Accept': 'application/json', // Заголовки по умолчанию
+        'Content-Type': 'application/json', // Заголовки по умолчанию
         'API-KEY': 'x-cg-pro-api-key CG-SWQVapn52Sr17948UytyZgHA', // Передача API-ключа через заголовок
     },
 });

@@ -26,10 +26,6 @@ export interface IAuthState {
     isLoading: boolean;
 }
 
-export interface IAssets {
-
-}
-
 export interface ISingleAsset {
     ath: number;
     ath_change_percentage: number;
@@ -66,7 +62,7 @@ export interface IAssetResponse {
 }
 
 export interface IAssetsState {
-    assets: IAssets[];
+    assets: ISingleAsset[];
     favoriteAssets: IAssetResponse[];
     isLoading: boolean;
 }

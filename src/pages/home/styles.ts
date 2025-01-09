@@ -34,13 +34,19 @@ export const ItemDetails = styled('div')(() => ({
 
 export const ItemPrice = styled('h3')(() => ({
     fontSize: 32,
-    fontWeight: 600,
+    fontWeight: 700,
     lineHeight: '48px',
 }));
 
 export const ItemCapitalize = styled(Box)(({theme}: { theme: Theme }) => {
     const colors = tokens(theme.palette.mode);
     return {
+        width: 80,
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: '24px',
+        borderRadius: 4,
         color: `${colors.secondary.DEFAULT}`,
         fontWeight: 400,
         fontSize: 18,
@@ -55,6 +61,23 @@ export const StyledLineChartBlock = styled(Grid2)(({theme}: { theme: Theme }) =>
         backgroundColor: `${theme.palette.mode === 'light' ? colors.primary.DEFAULT : colors.primary[600]}`,
         minHeight: 270,
         border: `1px solid ${colors.borderColor}`,
-        borderRadius: 12
+        borderRadius: 12,
+        marginBottom: 32
+    };
+});
+
+export const StyledTopPriceTable = styled(Grid2)(({theme}: { theme: Theme }) => {
+    const colors = tokens(theme.palette.mode);
+    return {
+        padding: '20px 16px',
+        backgroundColor: `${theme.palette.mode === 'light' ? colors.primary.DEFAULT : colors.primary[600]}`,
+        minHeight: 270,
+        border: `1px solid ${colors.borderColor}`,
+        borderRadius: 12,
+        '& .MuiPaper-root': {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+            backgroundImage: 'none',
+        }
     };
 });

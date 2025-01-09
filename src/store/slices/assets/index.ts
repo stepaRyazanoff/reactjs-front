@@ -1,6 +1,6 @@
-import {IAssetResponse, IAssetsState} from '../../../common/types';
+import {IAssetResponse, IAssetsState, ISingleAsset} from '../../../common/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {getFavoriteAssets} from '../../thunks/assets';
+import {getFavoriteAssets, getTopPriceData} from '../../thunks/assets';
 
 const initialState: IAssetsState = {
     assets: [],
@@ -25,6 +25,21 @@ export const assetSlice = createSlice({
                 });
 
         builder.addCase(getFavoriteAssets.rejected, (state: IAssetsState) => {
+            state.isLoading = false;
+        });
+
+        builder.addCase(getTopPriceData.pending, (state: IAssetsState) => {
+            state.isLoading = true;
+            state.assets = [];
+        });
+
+        builder.addCase(getTopPriceData.fulfilled,
+                (state: IAssetsState, action: PayloadAction<ISingleAsset[]>) => {
+                    state.assets = action.payload;
+                    state.isLoading = false;
+                });
+
+        builder.addCase(getTopPriceData.rejected, (state: IAssetsState) => {
             state.isLoading = false;
         });
     }

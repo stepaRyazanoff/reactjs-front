@@ -26,9 +26,16 @@ ChartJS.register(
 export function LineChart(props: { data: IAssetResponse[] }) {
     const options = {
         responsive: true,
+        scales: {
+            x: {
+                grid: {
+                    display: false,
+                }
+            }
+        },
         plugins: {
             legend: {
-                display: false,
+                position: 'top' as const,
             },
         },
     };
@@ -37,7 +44,7 @@ export function LineChart(props: { data: IAssetResponse[] }) {
         labels: props.data[0].prices.map((e) => moment(e[0]).format('DD.MM.YY')),
         datasets: [
             {
-                label: 'Цена: ',
+                label: props.data[0].name.charAt(0).toUpperCase() + props.data[0].name.slice(1),
                 data: props.data[0].prices.map((e) => e[1]),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
