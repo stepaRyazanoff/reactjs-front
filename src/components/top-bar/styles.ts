@@ -1,11 +1,7 @@
 import {
     AppBar,
-    Box,
-    Grid2,
-    IconButton,
     styled,
     Toolbar,
-    InputBase,
     Theme
 } from '@mui/material';
 import {tokens} from '../../theme';
@@ -31,37 +27,4 @@ export const StyledMenuIcon = styled(MenuOutlined)(() => ({
     marginRight: '20px',
 }));
 
-export const StyledTopBarBox = styled(Box)(() => ({display: 'flex'}));
-
-export const StyledTopBarIcons = styled(Grid2)(({theme}: { theme: Theme }) => {
-    const colors = tokens(theme.palette.mode);
-    return {
-        display: 'flex',
-        alignItems: 'center',
-        paddingRight: '35px',
-        borderRight: `1px solid ${colors.borderColor}`,
-        flexWrap: 'wrap',
-    };
-});
-
-export const StyledIconButton = styled(IconButton)(() => ({
-    '&:hover': {
-        backgroundColor: 'transparent',
-    },
-}));
-
-export const StyledSearchBlock = styled(Grid2)(({theme}: { theme: Theme }) => {
-    const colors = tokens(theme.palette.mode);
-    return {
-        display: 'flex',
-        backgroundColor: `${colors.primary[600]}`,
-        borderRadius: '8px',
-        marginLeft: '28px',
-    };
-});
-
-export const StyledInputBase = styled(InputBase)(({theme}: { theme: Theme }) => ({
-    padding: '10px 15px',
-    color: `${theme.palette.text.primary}`,
-}));
 

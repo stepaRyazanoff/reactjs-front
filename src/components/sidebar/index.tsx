@@ -20,6 +20,8 @@ import {
 import {FlexBetween} from '../flex-between';
 import {navMenu} from '../../common/mock/navigate';
 import {ArrowBackIosNewOutlined, LogoutOutlined} from '@mui/icons-material';
+import {ThemeSwitcher} from '../theme-switcher';
+import {SearchBar} from '../search-bar';
 
 interface IProps {
     isNonMobile: boolean;
@@ -63,6 +65,13 @@ export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, set
                                         </StyledSidebarHeaderBox>
                                     </FlexBetween>
                                 </Box>
+                                {!isNonMobile && (
+                                        <List>
+                                            <ListItem>
+                                                <SearchBar/>
+                                            </ListItem>
+                                        </List>
+                                )}
                                 <StyledNavList>
                                     {navMenu.map((el) => (
                                             <ListItem key={el.id}>
@@ -86,6 +95,13 @@ export const Sidebar: React.FC<IProps> = ({isNonMobile, drawerWidth, isOpen, set
                             </StyledNavBox>
                             <Box sx={{width: '100%'}}>
                                 <List>
+                                    {!isNonMobile && (
+                                            <ListItem disablePadding>
+                                                <Box paddingLeft='22px'>
+                                                    <ThemeSwitcher/>
+                                                </Box>
+                                            </ListItem>
+                                    )}
                                     <ListItem>
                                         <StyledListItemButton>
                                             <ListItemIcon>

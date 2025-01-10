@@ -40,7 +40,7 @@ export const StyledHeaderTypography = styled(Typography)(({theme}: { theme: Them
     };
 });
 
-export const StyledNavList = styled(Box,)(() => ({marginBottom: '55px'}));
+export const StyledNavList = styled(Box,)(() => ({}));
 
 export const StyledListItemButton = styled(ListItemButton,
         {shouldForwardProp: (prop) => !['active', 'path'].includes(prop as string)})<{
@@ -60,7 +60,7 @@ export const StyledListItemButton = styled(ListItemButton,
             borderRadius: '10px',
             color: `${colors.white.DEFAULT}`,
             '& .MuiSvgIcon-root': {
-                color:  `${colors.white.DEFAULT}`,
+                color: `${colors.white.DEFAULT}`,
             }
         }
     };
