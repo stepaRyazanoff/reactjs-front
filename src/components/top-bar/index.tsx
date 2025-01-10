@@ -1,63 +1,51 @@
-import React, {useContext} from 'react';
-import {Typography, useTheme} from '@mui/material';
+import React from 'react';
+import {Grid2, Typography} from '@mui/material';
 import {
-    DarkModeOutlined,
-    WbSunnyOutlined,
-    NotificationsOutlined,
-    SearchOutlined
-} from '@mui/icons-material';
-import {
-    StyledTopBarIcons,
-    StyledSearchBlock,
-    StyledIconButton,
-    StyledInputBase,
-    StyledTopBarBox,
     StyledToolbar,
     StyledAppBar,
     StyledMenuIcon
 } from './styles';
-import {ColorModeContext} from '../../theme';
 import {FlexBetween} from '../flex-between';
+import {ThemeSwitcher} from '../theme-switcher';
+import {SearchBar} from '../search-bar';
 
 interface IProps {
     isOpen: boolean;
     setIsOpen: (value: boolean) => void;
+    isNoneMobile: boolean;
 }
 
-export const TopBar: React.FC<IProps> = ({isOpen, setIsOpen}): React.ReactElement => {
+export const TopBar: React.FC<IProps> = ({isOpen, setIsOpen, isNoneMobile}): React.ReactElement => {
     const userName = sessionStorage.getItem('userName');
-    const theme = useTheme();
-    const colorMode = useContext(ColorModeContext);
 
     return (
             <StyledAppBar>
                 <StyledToolbar>
-                    <FlexBetween>
-                        <StyledMenuIcon onClick={() => setIsOpen(!isOpen)}/>
-                        <Typography variant='h3'>Welcome {userName}</Typography>
-                    </FlexBetween>
-                    <StyledTopBarBox>
-                        <StyledTopBarIcons onClick={colorMode.toggleColorMode}>
+                    <Grid2
+                            container
+                            flexBasis='100%'
+                            justifyContent='space-between'
+                            alignItems='center'
+                    >
+                        <Grid2 size={{sm: 3, lg: 3}}>
+                            <FlexBetween>
+                                <StyledMenuIcon onClick={() => setIsOpen(!isOpen)}/>
+                                <Typography variant='h3'>Welcome {userName}</Typography>
+                            </FlexBetween>
+                        </Grid2>
 
-                            <StyledIconButton sx={{mr: '45px'}}>
-                                {theme.palette.mode === 'dark'
-                                        ? <DarkModeOutlined/>
-                                        : <WbSunnyOutlined/>}
-                            </StyledIconButton>
+                        {isNoneMobile && (
+                                <Grid2
+                                        display='flex'
+                                        justifyContent='flex-end'
+                                        size={{sm: 9, lg: 9}}
+                                >
+                                    <ThemeSwitcher/>
+                                    <SearchBar/>
+                                </Grid2>
+                        )}
 
-                            <StyledIconButton>
-                                <NotificationsOutlined/>
-                            </StyledIconButton>
-                        </StyledTopBarIcons>
-
-                        <StyledSearchBlock>
-
-                            <StyledIconButton sx={{ml: '5px'}}>
-                                <SearchOutlined/>
-                            </StyledIconButton>
-                            <StyledInputBase placeholder='Поиск'/>
-                        </StyledSearchBlock>
-                    </StyledTopBarBox>
+                    </Grid2>
                 </StyledToolbar>
             </StyledAppBar>
     );

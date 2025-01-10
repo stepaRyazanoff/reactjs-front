@@ -8,7 +8,7 @@ import {StyledContentBox, StyledRootBox} from './styles';
 export const LayoutComponent: React.FC = (): React.ReactElement => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const location = useLocation();
-    const isNonMobile = useMediaQuery('(min-width:600px)');
+    const isNonMobile = useMediaQuery('(min-width:760px)');
     return (
             location.pathname === '/login' ||
             location.pathname === '/register'
@@ -28,6 +28,7 @@ export const LayoutComponent: React.FC = (): React.ReactElement => {
                                     <TopBar
                                             isOpen={isOpen}
                                             setIsOpen={setIsOpen}
+                                            isNoneMobile={isNonMobile}
                                     />
                                     <Outlet/>
                                 </StyledContentBox>
