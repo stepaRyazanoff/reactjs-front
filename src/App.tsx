@@ -9,6 +9,7 @@ import {Watchlist} from './pages/watchlist';
 import {News} from './pages/news';
 import {Settings} from './pages/settings';
 import {LayoutComponent} from './components/layout';
+import {SingleAsset} from './pages/single-asset';
 
 function App() {
     const [colorMode, theme] = useMode();
@@ -24,6 +25,7 @@ function App() {
                                     <Route path='/watchlist' element={<Watchlist/>}/>
                                     <Route path='/news' element={<News/>}/>
                                     <Route path='/settings' element={<Settings/>}/>
+                                    <Route path='/single/:id' element={<SingleAsset/>}/>
                                 </Route>
                                 <Route path='login' element={<AuthRootComponent/>}/>
                                 <Route path='register' element={<AuthRootComponent/>}/>
