@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {coinGeckoApi} from '../../../utils/axios';
+import {axiosInstanceAuth, coinGeckoApi} from '../../../utils/axios';
 import {AxiosError} from 'axios';
 import {IAssetResponse, ISingleAsset} from '../../../common/types';
 
@@ -39,6 +39,24 @@ export const getTopPriceData = createAsyncThunk<ISingleAsset[], void, { rejectVa
                         .get(`coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false`);
 
                 return assets.data;
+            } catch (err) {
+                const error = err as AxiosError;
+
+                if (error.response && error.response.data) {
+                    return thunkAPI.rejectWithValue((error.response.data as { message: string }).message);
+                } else {
+                    return thunkAPI.rejectWithValue(error.message);
+                }
+            }
+        }
+);
+
+export const createWatchlistRecord = createAsyncThunk<
+        any, { name: string, assetId: string }, { rejectValue: string }>(
+        'watchlist/create',
+        async (data: { name: string, assetId: string }, thunkAPI) => {
+            try {
+                return await axiosInstanceAuth.post(`watchlist/create`, data);
             } catch (err) {
                 const error = err as AxiosError;
 
