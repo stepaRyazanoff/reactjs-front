@@ -4,7 +4,7 @@ import {ISingleAsset} from '../../common/types';
 import {useAppSelector} from '../../utils/hooks';
 import {useNavigate} from 'react-router-dom';
 
-export const SearchBar = () => {
+export const SearchBar: React.FC = (): React.ReactElement => {
     const navigate = useNavigate();
     const assets: ISingleAsset[] = useAppSelector((state) => state.assets.assets);
 

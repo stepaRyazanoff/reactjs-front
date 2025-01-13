@@ -4,7 +4,15 @@ export const axiosInstance = axios.create({
     baseURL: 'http://localhost:3001', // Базовый URL для всех запросов
     headers: {
         'Content-Type': 'application/json', // Заголовки по умолчанию
-        'Authorization': 'Bearer YOUR_TOKEN', // Опционально: токен авторизации
+    },
+    withCredentials: true, // Для передачи cookies между клиентом и сервером
+});
+
+export const axiosInstanceAuth = axios.create({
+    baseURL: 'http://localhost:3001', // Базовый URL для всех запросов
+    headers: {
+        'Content-Type': 'application/json', // Заголовки по умолчанию
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`, // Опционально: токен авторизации
     },
     withCredentials: true, // Для передачи cookies между клиентом и сервером
 });
