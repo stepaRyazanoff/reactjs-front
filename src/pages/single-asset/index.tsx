@@ -91,7 +91,8 @@ export const SingleAsset = () => {
                             </Grid2>
                             <Grid2
                                     container
-                                    justifyContent='flex-end'
+                                    justifyContent='center'
+                                    width='100%'
                             >
                                 <Button
                                         color='success'
