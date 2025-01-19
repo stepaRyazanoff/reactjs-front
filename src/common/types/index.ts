@@ -26,6 +26,17 @@ export interface IAuthState {
     isLoading: boolean;
 }
 
+export interface IWatchlistState {
+    watchlist: IGetUserAssetResponse[];
+    isLoading: boolean;
+}
+
+export interface IWatchlistRecordResponse {
+    user: number;
+    name: string;
+    assetId: string;
+}
+
 export interface ISingleAsset {
     ath: number;
     ath_change_percentage: number;
@@ -93,6 +104,15 @@ export type Colors = {
     borderColor: string;
     blue: string;
 };
+
+export interface IGetUserAssetResponse {
+    id: number;
+    name: string;
+    assetId: string;
+    createdAt: string;
+    updatedAt: string;
+    user: number;
+}
 
 export type InputLoginData = InferType<typeof loginSchema>;
 export type InputRegisterData = InferType<typeof registerSchema>;

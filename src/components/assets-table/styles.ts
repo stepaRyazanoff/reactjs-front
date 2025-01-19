@@ -5,7 +5,6 @@ type Props = {
     changePrice?: number;
 }
 
-
 export const StyledTableCell =
         styled(TableCell, {shouldForwardProp: (prop) => !['changePercentagePrice', 'changePrice']
                     .includes(prop as string)})<Props>((props: Props) =>({
