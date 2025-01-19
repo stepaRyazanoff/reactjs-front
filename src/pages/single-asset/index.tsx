@@ -7,7 +7,7 @@ import {FlexBetween} from '../../components/flex-between';
 import {StyledGrid, StyledPriceTypography} from './styles';
 import {createWatchlistRecord} from '../../store/thunks/assets';
 
-export const SingleAsset = () => {
+export const SingleAsset: React.FC = (): React.ReactElement => {
     const {id} = useParams();
     const navigate = useNavigate();
     const assets: ISingleAsset[] = useAppSelector((state) => state.assets.assets);

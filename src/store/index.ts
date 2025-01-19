@@ -1,11 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
 import loginSlice from './slices/auth';
 import assetSlice from './slices/assets';
+import watchlistSlice from './slices/watchlist';
 
 export const store = configureStore({
     reducer: {
         auth: loginSlice,
-        assets: assetSlice
+        assets: assetSlice,
+        watchlist: watchlistSlice
     },
 });
 
